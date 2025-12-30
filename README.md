@@ -1,17 +1,17 @@
-# 📊 Logwork
+# Logwork
 
 Công cụ CLI để quản lý và xuất báo cáo log công việc từ Linear.
 
-## ✨ Tính năng
+## Tính năng
 
-- 🎯 Lấy log công việc từ Linear comments
-- 📅 Hỗ trợ nhiều định dạng ngày tháng (DD/MM/YYYY, DD/MM, DD-MM, YYYY-MM-DD)
-- 🔄 Nhiều tùy chọn thời gian (hôm nay, hôm qua, 7 ngày, 30 ngày, tùy chỉnh)
-- 💬 Interactive mode mặc định
-- 📋 Tự động format cho Slack trong markdown code block
-- 🎨 Hiển thị đẹp với màu sắc và tổng hợp giờ
+- Lấy log công việc từ Linear comments
+- Hỗ trợ nhiều định dạng ngày tháng (DD/MM/YYYY, DD/MM, DD-MM, YYYY-MM-DD)
+- Nhiều tùy chọn thời gian (hôm nay, hôm qua, 7 ngày, 30 ngày, tùy chỉnh)
+- Interactive mode mặc định
+- Tự động format cho Slack trong markdown code block
+- Hiển thị đẹp với màu sắc và tổng hợp giờ
 
-## 📦 Cài đặt
+## Cài đặt
 
 ```bash
 # Clone repository
@@ -28,7 +28,7 @@ pnpm build
 pnpm link --global
 ```
 
-## ⚙️ Cấu hình
+## Cấu hình
 
 Tạo file `.env` ở một trong các vị trí sau (theo thứ tự ưu tiên):
 
@@ -52,7 +52,7 @@ mkdir -p ~/.config/logwork
 echo "LINEAR_API_KEY=your_key_here" > ~/.config/logwork/.env
 ```
 
-## 🚀 Sử dụng
+## Sử dụng
 
 ### Interactive Mode (Mặc định)
 
@@ -98,7 +98,7 @@ logwork --from 20/12/2025 --to 30/12/2025
 logwork --from 20-12-2025 --to 30-12-2025
 ```
 
-## 📝 Format Log Work trong Linear
+## Format Log Work trong Linear
 
 Để CLI nhận diện được log work, comment trong Linear cần theo format:
 
@@ -116,7 +116,7 @@ Tùy chọn: Thêm ngày cụ thể (nếu không có sẽ lấy ngày tạo com
 log 3h 26/12/2025
 ```
 
-## 📤 Output
+## Output
 
 ### 1. Detailed Format
 
@@ -130,13 +130,13 @@ log 3h 26/12/2025
   https://linear.app/workspace/issue/NOW-23935: 3h
   Tổng ngày: 3h
 
-📊 Tổng số giờ: 6.5h
+Tổng số giờ: 6.5h
 ```
 
 ### 2. Slack Format (để copy)
 
 ```
-📋 Format cho Slack (copy bên dưới):
+Format cho Slack (copy bên dưới):
 29/12/2025
 ```
 https://linear.app/workspace/issue/NOW-23531
@@ -149,7 +149,7 @@ https://linear.app/workspace/issue/NOW-23935
 ```
 ```
 
-## 🏗️ Cấu trúc Project
+## Cấu trúc Project
 
 ```
 src/
@@ -170,7 +170,7 @@ src/
     └── url-utils.ts       # Linear URL processing
 ```
 
-## 🛠️ Development
+## Development
 
 ```bash
 # Run in dev mode
@@ -186,7 +186,7 @@ pnpm typecheck
 pnpm check
 ```
 
-## 📋 Scripts
+## Scripts
 
 - `pnpm build` - Build project
 - `pnpm dev` - Watch mode
@@ -194,10 +194,10 @@ pnpm check
 - `pnpm check` - Format & lint with Biome
 - `pnpm start` - Run built version
 
-## 🤝 Contributing
+## Contributing
 
 Pull requests are welcome!
 
-## 📄 License
+## License
 
 MIT

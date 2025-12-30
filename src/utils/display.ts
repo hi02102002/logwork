@@ -54,7 +54,7 @@ export function displayDetailedLogs(
 		console.log(chalk.white(`  Tổng ngày: ${chalk.bold(`${dayTotal}h`)}`));
 	}
 
-	console.log(chalk.magenta.bold(`\n📊 Tổng số giờ: ${totalHours}h`));
+	console.log(chalk.magenta.bold(`\nTổng số giờ: ${totalHours}h`));
 }
 
 export function displayDateRangeMessage(from: string, to: string) {

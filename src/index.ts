@@ -23,7 +23,7 @@ async function fetchAndDisplayLogs(dateRange: { from: string; to: string }) {
 
 	displayDetailedLogs(logs);
 
-	console.log(chalk.yellow.bold("\n\n📋 Format cho Slack (copy bên dưới):"));
+	console.log(chalk.yellow.bold("\n\nFormat cho Slack (copy bên dưới):"));
 	displaySlackFormat(logs);
 }
 
