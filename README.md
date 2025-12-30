@@ -30,13 +30,27 @@ pnpm link --global
 
 ## ⚙️ Cấu hình
 
-Tạo file `.env` trong thư mục gốc:
+Tạo file `.env` ở một trong các vị trí sau (theo thứ tự ưu tiên):
+
+1. **`~/.config/logwork/.env`** (khuyến nghị)
+2. **`~/.logwork/.env`**
+3. **`.env`** trong thư mục hiện tại
 
 ```env
 LINEAR_API_KEY=your_linear_api_key_here
 ```
 
 Lấy Linear API key tại: https://linear.app/settings/api
+
+### Setup nhanh
+
+```bash
+# Tạo config folder
+mkdir -p ~/.config/logwork
+
+# Tạo .env file
+echo "LINEAR_API_KEY=your_key_here" > ~/.config/logwork/.env
+```
 
 ## 🚀 Sử dụng
 
