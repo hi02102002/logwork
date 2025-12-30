@@ -11,15 +11,15 @@ import {
 
 export async function getInteractiveDateRange(): Promise<DateRange | null> {
 	const choice = await select({
-		message: "Chọn khoảng thời gian:",
+		message: "Select time range:",
 		choices: [
-			{ name: "Hôm nay", value: "today" },
-			{ name: "Hôm qua", value: "yesterday" },
-			{ name: "2 ngày gần đây", value: "2d" },
-			{ name: "7 ngày gần đây", value: "7d" },
-			{ name: "30 ngày gần đây", value: "30d" },
-			{ name: "2 tuần gần đây", value: "2w" },
-			{ name: "Tùy chỉnh khoảng thời gian", value: "custom" },
+			{ name: "Today", value: "today" },
+			{ name: "Yesterday", value: "yesterday" },
+			{ name: "Last 2 days", value: "2d" },
+			{ name: "Last 7 days", value: "7d" },
+			{ name: "Last 30 days", value: "30d" },
+			{ name: "Last 2 weeks", value: "2w" },
+			{ name: "Custom date range", value: "custom" },
 		],
 	});
 
@@ -37,22 +37,22 @@ export async function getInteractiveDateRange(): Promise<DateRange | null> {
 
 	if (choice === "custom") {
 		const fromStr = await input({
-			message: "Từ ngày (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY]):",
+			message: "From date (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY]):",
 			validate: (value) => {
-				if (!value) return "Vui lòng nhập ngày";
+				if (!value) return "Please enter a date";
 				const parsed = parseDate(value);
-				if (!parsed) return "Định dạng ngày không hợp lệ";
+				if (!parsed) return "Invalid date format";
 				return true;
 			},
 		});
 
 		const toStr = await input({
-			message: "Đến ngày (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY]):",
+			message: "To date (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY]):",
 			default: dayjs().format("YYYY-MM-DD"),
 			validate: (value) => {
-				if (!value) return "Vui lòng nhập ngày";
+				if (!value) return "Please enter a date";
 				const parsed = parseDate(value);
-				if (!parsed) return "Định dạng ngày không hợp lệ";
+				if (!parsed) return "Invalid date format";
 				return true;
 			},
 		});

@@ -35,7 +35,7 @@ export async function getDateRangeFromOptions(
 		if (!dateRange) {
 			console.error(
 				chalk.red(
-					`Định dạng khoảng thời gian không hợp lệ: ${options.range}. Sử dụng định dạng như: 7d, 30d, 2w`,
+					`Invalid time range format: ${options.range}. Use format like: 7d, 30d, 2w`,
 				),
 			);
 			process.exit(1);
@@ -46,7 +46,7 @@ export async function getDateRangeFromOptions(
 	if (options.from && options.to) {
 		const dateRange = createDateRange(options.from, options.to);
 		if (!dateRange) {
-			console.error(chalk.red("Định dạng ngày không hợp lệ cho from/to"));
+			console.error(chalk.red("Invalid date format for from/to"));
 			process.exit(1);
 		}
 		return dateRange;
@@ -58,12 +58,12 @@ export async function getDateRangeFromOptions(
 			dayjs().format("YYYY-MM-DD"),
 		);
 		if (!dateRange) {
-			console.error(chalk.red("Định dạng ngày không hợp lệ cho from"));
+			console.error(chalk.red("Invalid date format for from"));
 			process.exit(1);
 		}
 		return dateRange;
 	}
 
-	// Mặc định là interactive mode
+	// Default is interactive mode
 	return await getInteractiveDateRange();
 }

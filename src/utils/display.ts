@@ -51,16 +51,16 @@ export function displayDetailedLogs(
 			totalHours += hours;
 		}
 
-		console.log(chalk.white(`  Tổng ngày: ${chalk.bold(`${dayTotal}h`)}`));
+		console.log(chalk.white(`  Daily total: ${chalk.bold(`${dayTotal}h`)}`));
 	}
 
-	console.log(chalk.magenta.bold(`\nTổng số giờ: ${totalHours}h`));
+	console.log(chalk.magenta.bold(`\nTotal hours: ${totalHours}h`));
 }
 
 export function displayDateRangeMessage(from: string, to: string) {
 	console.log(
 		chalk.blue(
-			`\nĐang lấy dữ liệu từ ${dayjs(from).format("DD/MM/YYYY")} đến ${dayjs(to).format("DD/MM/YYYY")}...\n`,
+			`\nFetching data from ${dayjs(from).format("DD/MM/YYYY")} to ${dayjs(to).format("DD/MM/YYYY")}...\n`,
 		),
 	);
 }
@@ -68,7 +68,7 @@ export function displayDateRangeMessage(from: string, to: string) {
 export function displayNoLogsMessage() {
 	console.log(
 		chalk.yellow(
-			"Không tìm thấy log công việc nào trong khoảng thời gian này.",
+			"No work logs found in this time range.",
 		),
 	);
 }

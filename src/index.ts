@@ -23,24 +23,24 @@ async function fetchAndDisplayLogs(dateRange: { from: string; to: string }) {
 
 	displayDetailedLogs(logs);
 
-	console.log(chalk.yellow.bold("\n\nFormat cho Slack (copy bên dưới):"));
+	console.log(chalk.yellow.bold("\n\nFormat for Slack (copy below):"));
 	displaySlackFormat(logs);
 }
 
 program
 	.name("logwork")
-	.description("Công cụ CLI quản lý log công việc Linear")
+	.description("CLI tool to manage Linear work logs")
 	.version("1.0.0")
-	.option("--today", "Lấy log hôm nay")
-	.option("--yesterday", "Lấy log hôm qua")
-	.option("--from <date>", "Từ ngày (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY])")
-	.option("--to <date>", "Đến ngày (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY])")
+	.option("--today", "Get today's logs")
+	.option("--yesterday", "Get yesterday's logs")
+	.option("--from <date>", "From date (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY])")
+	.option("--to <date>", "To date (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY])")
 	.option(
 		"--range <range>",
-		"Khoảng thời gian như 7d, 30d, 2w (kết thúc hôm nay)",
+		"Time range like 7d, 30d, 2w (ending today)",
 	)
-	.option("-i, --interactive", "Chế độ tương tác")
-	.option("--slack", "Xuất theo định dạng Slack")
+	.option("-i, --interactive", "Interactive mode")
+	.option("--slack", "Export in Slack format")
 	.action(async (options) => {
 		try {
 			const dateRange = await getDateRangeFromOptions(options);
@@ -48,11 +48,11 @@ program
 			if (dateRange) {
 				await fetchAndDisplayLogs(dateRange);
 			} else {
-				console.error(chalk.red("Không thể xác định khoảng thời gian"));
+				console.error(chalk.red("Unable to determine date range"));
 				process.exit(1);
 			}
 		} catch (error) {
-			console.error(chalk.red("Lỗi:"), error);
+			console.error(chalk.red("Error:"), error);
 			process.exit(1);
 		}
 	});
