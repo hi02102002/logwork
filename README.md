@@ -1,106 +1,110 @@
 # Logwork
 
-Công cụ CLI để quản lý và xuất báo cáo log công việc từ Linear.
+A CLI tool to manage and export work log reports from Linear.
 
-## Tính năng
+## Features
 
-- Lấy log công việc từ Linear comments
-- Hỗ trợ nhiều định dạng ngày tháng (DD/MM/YYYY, DD/MM, DD-MM, YYYY-MM-DD)
-- Nhiều tùy chọn thời gian (hôm nay, hôm qua, 7 ngày, 30 ngày, tùy chỉnh)
-- Interactive mode mặc định
-- Tự động format cho Slack trong markdown code block
-- Hiển thị đẹp với màu sắc và tổng hợp giờ
+- Fetch work logs from Linear comments
+- Support multiple date formats (DD/MM/YYYY, DD/MM, DD-MM, YYYY-MM-DD)
+- Multiple time range options (today, yesterday, 7 days, 30 days, custom)
+- Interactive mode by default
+- Auto-format for Slack in markdown code blocks
+- Beautiful display with colors and hour summaries
 
-## Cài đặt
+## Installation
 
 ```bash
 # Clone repository
 git clone <repo-url>
 cd logwork
 
-# Cài đặt dependencies
+# Install dependencies
 pnpm install
 
 # Build
 pnpm build
 
-# Link globally để sử dụng ở mọi nơi
+# Link globally to use anywhere
 pnpm link --global
 ```
 
-## Cấu hình
+## Configuration
 
-Tạo file `.env` ở một trong các vị trí sau (theo thứ tự ưu tiên):
+Create a `.env` file in one of the following locations (in priority order):
 
-1. **`~/.config/logwork/.env`** (khuyến nghị)
+1. **`~/.config/logwork/.env`** (recommended)
 2. **`~/.logwork/.env`**
-3. **`.env`** trong thư mục hiện tại
+3. **`.env`** in current directory
 
 ```env
 LINEAR_API_KEY=your_linear_api_key_here
 ```
 
-Lấy Linear API key tại: https://linear.app/settings/api
+Get your Linear API key at: https://linear.app/settings/api
 
-### Setup nhanh
+### Quick Setup
 
 ```bash
-# Tạo config folder
+# Create config folder
 mkdir -p ~/.config/logwork
 
-# Tạo .env file
+# Create .env file
 echo "LINEAR_API_KEY=your_key_here" > ~/.config/logwork/.env
 ```
 
-## Sử dụng
+## Usage
 
-### Interactive Mode (Mặc định)
+### Interactive Mode (Default)
 
 ```bash
 logwork
 ```
 
-Sẽ hiển thị menu để chọn:
-- Hôm nay
-- Hôm qua
-- 7 ngày gần đây
-- 30 ngày gần đây
-- 2 tuần gần đây
-- Tùy chỉnh khoảng thời gian
+Will display a menu to choose:
+- Today
+- Yesterday
+- Last 2 days
+- Last 7 days
+- Last 30 days
+- Last 2 weeks
+- Custom date range
 
 ### Command Line Options
 
 ```bash
-# Xem log hôm nay
+# View today's logs
 logwork --today
 
-# Xem log hôm qua
+# View yesterday's logs
 logwork --yesterday
 
-# Xem log 7 ngày gần đây
+# View last 7 days logs
 logwork --range 7d
 
-# Xem log 30 ngày gần đây
+# View last 2 days logs
+logwork --range 2d
+
+# View last 30 days logs
 logwork --range 30d
 
-# Xem log 2 tuần gần đây
+# View last 2 weeks logs
 logwork --range 2w
 
-# Xem log từ ngày cụ thể đến hôm nay
+# View logs from specific date to today
 logwork --from 25/12/2025
 
-# Xem log trong khoảng thời gian
+# View logs in date range
 logwork --from 20/12/2025 --to 30/12/2025
 
-# Định dạng ngày hỗ trợ
+# Supported date formats
 logwork --from 2025-12-20 --to 2025-12-30
 logwork --from 20/12/2025 --to 30/12/2025
 logwork --from 20-12-2025 --to 30-12-2025
 ```
 
-## Format Log Work trong Linear
+## Work Log Format in Linear
 
-Để CLI nhận diện được log work, comment trong Linear cần theo format:
+For the CLI to recognize work logs, comments in Linear should follow these formats:
 
 ```
 log 2h
@@ -109,7 +113,7 @@ worklog: 4h
 logged 1.5h
 ```
 
-Tùy chọn: Thêm ngày cụ thể (nếu không có sẽ lấy ngày tạo comment):
+Optional: Add specific date (if not provided, comment creation date will be used):
 
 ```
 25/12/2025 log 2h
@@ -124,19 +128,19 @@ log 3h 26/12/2025
 29/12/2025:
   https://linear.app/workspace/issue/NOW-23531: 2h
   https://linear.app/workspace/issue/NOW-23724: 1.5h
-  Tổng ngày: 3.5h
+  Daily total: 3.5h
 
 30/12/2025:
   https://linear.app/workspace/issue/NOW-23935: 3h
-  Tổng ngày: 3h
+  Daily total: 3h
 
-Tổng số giờ: 6.5h
+Total hours: 6.5h
 ```
 
-### 2. Slack Format (để copy)
+### 2. Slack Format (ready to copy)
 
 ```
-Format cho Slack (copy bên dưới):
+Format for Slack (copy below):
 29/12/2025
 ```
 https://linear.app/workspace/issue/NOW-23531
@@ -149,7 +153,7 @@ https://linear.app/workspace/issue/NOW-23935
 ```
 ```
 
-## Cấu trúc Project
+## Project Structure
 
 ```
 src/
@@ -158,12 +162,12 @@ src/
 ├── env.ts                  # Environment configuration
 ├── linear.ts               # Linear API client
 ├── funcs/
-│   └── get-work-logs.ts   # Core logic lấy & group logs
+│   └── get-work-logs.ts   # Core logic for fetching & grouping logs
 └── utils/
     ├── index.ts           # Re-export all utils
-    ├── cli-handler.ts     # Xử lý CLI options
+    ├── cli-handler.ts     # CLI options handler
     ├── date-parser.ts     # Parse dates & date ranges
-    ├── date-utils.ts      # Date extraction từ text
+    ├── date-utils.ts      # Date extraction from text
     ├── display.ts         # Display & formatting
     ├── interactive.ts     # Interactive mode
     ├── regex-utils.ts     # Regex matching & extraction
