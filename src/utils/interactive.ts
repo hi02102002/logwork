@@ -15,6 +15,7 @@ export async function getInteractiveDateRange(): Promise<DateRange | null> {
 		choices: [
 			{ name: "Hôm nay", value: "today" },
 			{ name: "Hôm qua", value: "yesterday" },
+			{ name: "2 ngày gần đây", value: "2d" },
 			{ name: "7 ngày gần đây", value: "7d" },
 			{ name: "30 ngày gần đây", value: "30d" },
 			{ name: "2 tuần gần đây", value: "2w" },
@@ -30,7 +31,7 @@ export async function getInteractiveDateRange(): Promise<DateRange | null> {
 		return getYesterdayRange();
 	}
 
-	if (choice === "7d" || choice === "30d" || choice === "2w") {
+	if (choice === "7d" || choice === "30d" || choice === "2w" || choice === "2d") {
 		return parseRange(choice);
 	}
 
