@@ -1,4 +1,5 @@
 import type { Comment } from "@linear/sdk";
+import dayjs from "dayjs";
 import { LOG_WORK_REGEX } from "../constants";
 import { client } from "../linear";
 import {
@@ -41,6 +42,13 @@ const mapCommentToWorkLog = (comment: Comment) => {
 const getWorkLogs = async ({ from, to }: { from?: string; to?: string }) => {
 	const me = await client.viewer;
 
+	const extendedFrom = from
+		? dayjs(from).startOf("day").subtract(2, "days").toISOString()
+		: undefined;
+	const extendedTo = to
+		? dayjs(to).endOf("day").add(2, "days").toISOString()
+		: undefined;
+
 	const all: Comment[] = [];
 	let after: string | undefined;
 
@@ -48,7 +56,10 @@ const getWorkLogs = async ({ from, to }: { from?: string; to?: string }) => {
 		const comments = await client.comments({
 			filter: {
 				user: { id: { eq: me.id } },
-				createdAt: { gte: from, lte: to },
+				createdAt: {
+					gte: extendedFrom,
+					lte: extendedTo,
+				},
 				body: {
 					contains: "log",
 				},
@@ -67,7 +78,17 @@ const getWorkLogs = async ({ from, to }: { from?: string; to?: string }) => {
 
 	return all
 		.filter((comment) => isMatchingRegex(comment.body, LOG_WORK_REGEX))
-		.map(mapCommentToWorkLog);
+		.map(mapCommentToWorkLog)
+		.filter((worklog) => {
+			const date = dayjs(worklog.date, "DD/MM/YYYY", true);
+
+			if (!date.isValid()) return false;
+
+			if (from && date.isBefore(dayjs(from), "day")) return false;
+			if (to && date.isAfter(dayjs(to), "day")) return false;
+
+			return true;
+		});
 };
 
 export const getGroupedWorkLogs = async (params: {
