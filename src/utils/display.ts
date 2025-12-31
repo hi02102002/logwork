@@ -128,14 +128,14 @@ export function displayTableFormat(
 	}
 
 	console.log(table.toString());
-	
+
 	// Count total tasks
 	let totalTasks = 0;
 	for (const date of sortedDates) {
 		const urls = logs[date];
 		totalTasks += Object.keys(urls).length;
 	}
-	
+
 	console.log(chalk.magenta.bold(`\nTotal hours: ${totalHours}h`));
 	console.log(chalk.cyan.bold(`Total tasks: ${totalTasks}`));
 }
