@@ -1,8 +1,12 @@
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 import chalk from "chalk";
 import Table from "cli-table3";
 import dayjs from "dayjs";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export function sortDatesByAscending(dates: string[]): string[] {
 	return dates.sort((a, b) => {
@@ -133,8 +137,10 @@ export function exportToMarkdown(
 ) {
 	const sortedDates = sortDatesByAscending(Object.keys(logs));
 
-	// Create reports directory if it doesn't exist
-	const reportsDir = path.join(process.cwd(), "reports");
+	// Get project root - dist is built at project root level
+	const projectRoot = path.resolve(__dirname, "..");
+	const reportsDir = path.join(projectRoot, "reports");
+
 	if (!fs.existsSync(reportsDir)) {
 		fs.mkdirSync(reportsDir, { recursive: true });
 	}
@@ -149,10 +155,13 @@ export function exportToMarkdown(
 
 		let dayTotal = 0;
 
-		// Bullet list format
+		// Table format
 		markdown += "## Tasks\n\n";
+		markdown += "| Issue URL | Hours |\n";
+		markdown += "|-----------|-------|\n";
+
 		for (const [url, hours] of Object.entries(urls)) {
-			markdown += `- [${url}](${url}) - **${hours}h**\n`;
+			markdown += `| [${url}](${url}) | **${hours}h** |\n`;
 			dayTotal += hours;
 		}
 
