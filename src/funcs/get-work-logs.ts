@@ -60,9 +60,6 @@ const getWorkLogs = async ({ from, to }: { from?: string; to?: string }) => {
 					gte: extendedFrom,
 					lte: extendedTo,
 				},
-				body: {
-					contains: "log",
-				},
 			},
 			first: 100,
 			after,
@@ -75,6 +72,7 @@ const getWorkLogs = async ({ from, to }: { from?: string; to?: string }) => {
 			? (comments.pageInfo.endCursor ?? undefined)
 			: undefined;
 	} while (after);
+
 
 	return all
 		.filter((comment) => isMatchingRegex(comment.body, LOG_WORK_REGEX))

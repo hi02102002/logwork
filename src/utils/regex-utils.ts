@@ -15,11 +15,15 @@ export const extractHoursFromComment = (
 			? new RegExp(regex, "gi")
 			: new RegExp(regex.source, "gi");
 
+	if (text.includes('Passed')) {
+		console.log(text)
+	}
+
 	let total = 0;
 
 	for (const match of text.matchAll(re)) {
 		const hoursMatch = match[0].match(
-			/(?:log(?:\s*work)?|work\s*log|worklog)\s*:?\s*(\d+(?:\.\d+)?)\s*h?/i,
+			/(?:log(?:\s*work)?|work\s*log|worklog|Log|Logwork|log-work|Log-Work)\s*:?\s*(\d+(?:\.\d+)?)\s*h?/i,
 		);
 
 		if (hoursMatch) {
