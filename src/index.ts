@@ -7,11 +7,15 @@ import {
 	displayDetailedLogs,
 	displayNoLogsMessage,
 	displaySlackFormat,
+	exportToMarkdown,
 } from "./utils/display";
 
 const program = new Command();
 
-async function fetchAndDisplayLogs(dateRange: { from: string; to: string }) {
+async function fetchAndDisplayLogs(
+	dateRange: { from: string; to: string },
+	options?: { markdown?: boolean; output?: string },
+) {
 	displayDateRangeMessage(dateRange.from, dateRange.to);
 
 	const logs = await getGroupedWorkLogs(dateRange);
@@ -25,6 +29,11 @@ async function fetchAndDisplayLogs(dateRange: { from: string; to: string }) {
 
 	console.log(chalk.yellow.bold("\n\nFormat for Slack (copy below):"));
 	displaySlackFormat(logs);
+
+	if (options?.markdown) {
+		console.log();
+		exportToMarkdown(logs, options.output);
+	}
 }
 
 program
@@ -41,12 +50,17 @@ program
 	.option("--range <range>", "Time range like 7d, 30d, 2w (ending today)")
 	.option("-i, --interactive", "Interactive mode")
 	.option("--slack", "Export in Slack format")
+	.option("--markdown", "Export to markdown file with clickable links")
+	.option("-o, --output <path>", "Output path for markdown file")
 	.action(async (options) => {
 		try {
 			const dateRange = await getDateRangeFromOptions(options);
 
 			if (dateRange) {
-				await fetchAndDisplayLogs(dateRange);
+				await fetchAndDisplayLogs(dateRange, {
+					markdown: options.markdown,
+					output: options.output,
+				});
 			} else {
 				console.error(chalk.red("Unable to determine date range"));
 				process.exit(1);
