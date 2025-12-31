@@ -361,7 +361,13 @@ function displayTableFormat(logs) {
 		}]);
 	}
 	console.log(table.toString());
+	let totalTasks = 0;
+	for (const date of sortedDates) {
+		const urls = logs[date];
+		totalTasks += Object.keys(urls).length;
+	}
 	console.log(chalk.magenta.bold(`\nTotal hours: ${totalHours}h`));
+	console.log(chalk.cyan.bold(`Total tasks: ${totalTasks}`));
 }
 function exportToMarkdown(logs, outputPath) {
 	const sortedDates = sortDatesByAscending(Object.keys(logs));
