@@ -66,9 +66,5 @@ export function displayDateRangeMessage(from: string, to: string) {
 }
 
 export function displayNoLogsMessage() {
-	console.log(
-		chalk.yellow(
-			"No work logs found in this time range.",
-		),
-	);
+	console.log(chalk.yellow("No work logs found in this time range."));
 }

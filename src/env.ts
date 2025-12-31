@@ -1,8 +1,8 @@
-import { createEnv } from "@t3-oss/env-core";
-import dotenv from "dotenv";
 import { existsSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
+import { createEnv } from "@t3-oss/env-core";
+import dotenv from "dotenv";
 import { z } from "zod";
 
 // Tìm .env file ở các vị trí sau theo thứ tự:

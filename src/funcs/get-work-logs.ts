@@ -41,14 +41,31 @@ const mapCommentToWorkLog = (comment: Comment) => {
 const getWorkLogs = async ({ from, to }: { from?: string; to?: string }) => {
 	const me = await client.viewer;
 
-	const comments = await client.comments({
-		filter: {
-			user: { id: { eq: me.id } },
-			createdAt: { gte: from, lte: to },
-		},
-	});
+	const all: Comment[] = [];
+	let after: string | undefined;
 
-	return comments.nodes
+	do {
+		const comments = await client.comments({
+			filter: {
+				user: { id: { eq: me.id } },
+				createdAt: { gte: from, lte: to },
+				body: {
+					contains: "log",
+				},
+			},
+			first: 100,
+			after,
+		});
+
+		await new Promise((resolve) => setTimeout(resolve, 200));
+
+		all.push(...comments.nodes);
+		after = comments.pageInfo.hasNextPage
+			? (comments.pageInfo.endCursor ?? undefined)
+			: undefined;
+	} while (after);
+
+	return all
 		.filter((comment) => isMatchingRegex(comment.body, LOG_WORK_REGEX))
 		.map(mapCommentToWorkLog);
 };

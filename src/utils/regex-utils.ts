@@ -5,27 +5,27 @@ export const isMatchingRegex = (text: string, regex: string | RegExp) => {
 
 export const extractHoursFromComment = (
 	text: string,
-	regex: string | RegExp
+	regex: string | RegExp,
 ): number => {
-	if (!text) return 0
+	if (!text) return 0;
 
 	// Ép regex có flag g + i
 	const re =
 		typeof regex === "string"
 			? new RegExp(regex, "gi")
-			: new RegExp(regex.source, "gi")
+			: new RegExp(regex.source, "gi");
 
-	let total = 0
+	let total = 0;
 
 	for (const match of text.matchAll(re)) {
 		const hoursMatch = match[0].match(
-			/(?:log(?:\s*work)?|work\s*log|worklog)\s*:?\s*(\d+(?:\.\d+)?)\s*h?/i
-		)
+			/(?:log(?:\s*work)?|work\s*log|worklog)\s*:?\s*(\d+(?:\.\d+)?)\s*h?/i,
+		);
 
 		if (hoursMatch) {
-			total += Number(hoursMatch[1])
+			total += Number(hoursMatch[1]);
 		}
 	}
 
-	return total
-}
+	return total;
+};

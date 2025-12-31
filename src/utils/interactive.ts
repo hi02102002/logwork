@@ -31,7 +31,12 @@ export async function getInteractiveDateRange(): Promise<DateRange | null> {
 		return getYesterdayRange();
 	}
 
-	if (choice === "7d" || choice === "30d" || choice === "2w" || choice === "2d") {
+	if (
+		choice === "7d" ||
+		choice === "30d" ||
+		choice === "2w" ||
+		choice === "2d"
+	) {
 		return parseRange(choice);
 	}
 

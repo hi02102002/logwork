@@ -33,12 +33,12 @@ program
 	.version("1.0.0")
 	.option("--today", "Get today's logs")
 	.option("--yesterday", "Get yesterday's logs")
-	.option("--from <date>", "From date (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY])")
-	.option("--to <date>", "To date (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY])")
 	.option(
-		"--range <range>",
-		"Time range like 7d, 30d, 2w (ending today)",
+		"--from <date>",
+		"From date (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY])",
 	)
+	.option("--to <date>", "To date (YYYY-MM-DD | DD/MM[/YYYY] | DD-MM[-YYYY])")
+	.option("--range <range>", "Time range like 7d, 30d, 2w (ending today)")
 	.option("-i, --interactive", "Interactive mode")
 	.option("--slack", "Export in Slack format")
 	.action(async (options) => {
