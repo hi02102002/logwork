@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import chalk from "chalk";
+import Table from "cli-table3";
 import dayjs from "dayjs";
 
 export function sortDatesByAscending(dates: string[]): string[] {
@@ -71,6 +72,61 @@ export function displayNoLogsMessage() {
 	console.log(chalk.yellow("No work logs found in this time range."));
 }
 
+export function displayTableFormat(
+	logs: Record<string, Record<string, number>>,
+) {
+	const sortedDates = sortDatesByAscending(Object.keys(logs));
+	let totalHours = 0;
+
+	const table = new Table({
+		head: [
+			chalk.cyan.bold("Date"),
+			chalk.cyan.bold("Issue URL"),
+			chalk.cyan.bold("Hours"),
+		],
+		style: {
+			head: [],
+			border: ["gray"],
+		},
+		colWidths: [15, 70, 10],
+		wordWrap: true,
+	});
+
+	for (const date of sortedDates) {
+		const urls = logs[date];
+		let dayTotal = 0;
+		const urlEntries = Object.entries(urls);
+
+		for (let i = 0; i < urlEntries.length; i++) {
+			const [url, hours] = urlEntries[i];
+			table.push([
+				i === 0 ? chalk.yellow(date) : "",
+				chalk.gray(url),
+				chalk.green(`${hours}h`),
+			]);
+			dayTotal += hours;
+			totalHours += hours;
+		}
+
+		// Add daily total row
+		table.push([
+			"",
+			chalk.white.bold("Daily total:"),
+			chalk.white.bold(`${dayTotal}h`),
+		]);
+
+		// Add separator between dates (except for last date)
+		if (date !== sortedDates[sortedDates.length - 1]) {
+			table.push([
+				{ colSpan: 3, content: "", hAlign: "center" as const },
+			]);
+		}
+	}
+
+	console.log(table.toString());
+	console.log(chalk.magenta.bold(`\nTotal hours: ${totalHours}h`));
+}
+
 export function exportToMarkdown(
 	logs: Record<string, Record<string, number>>,
 	outputPath?: string,
@@ -93,7 +149,7 @@ export function exportToMarkdown(
 
 		let dayTotal = 0;
 
-		// Detailed view with clickable links
+		// Bullet list format
 		markdown += "## Tasks\n\n";
 		for (const [url, hours] of Object.entries(urls)) {
 			markdown += `- [${url}](${url}) - **${hours}h**\n`;
@@ -125,9 +181,10 @@ export function exportToMarkdown(
 		exportedFiles.push(fileName);
 	}
 
-	console.log(chalk.green(`✓ ${exportedFiles.length} markdown file(s) exported:`));
+	// Print exported files
+	console.log(chalk.green(`\n✓ ${exportedFiles.length} markdown file(s) exported:`));
 	for (const file of exportedFiles) {
-		console.log(chalk.gray(`  - ${file}`));
+		console.log(chalk.gray(`  ${file}`));
 	}
 
 	return exportedFiles;

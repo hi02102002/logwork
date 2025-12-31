@@ -7,6 +7,7 @@ import {
 	displayDetailedLogs,
 	displayNoLogsMessage,
 	displaySlackFormat,
+	displayTableFormat,
 	exportToMarkdown,
 } from "./utils/display";
 
@@ -14,7 +15,7 @@ const program = new Command();
 
 async function fetchAndDisplayLogs(
 	dateRange: { from: string; to: string },
-	options?: { markdown?: boolean; output?: string },
+	options?: { output?: string },
 ) {
 	displayDateRangeMessage(dateRange.from, dateRange.to);
 
@@ -25,15 +26,11 @@ async function fetchAndDisplayLogs(
 		return;
 	}
 
-	displayDetailedLogs(logs);
+	// Always display table format in terminal
+	displayTableFormat(logs);
 
-	console.log(chalk.yellow.bold("\n\nFormat for Slack (copy below):"));
-	displaySlackFormat(logs);
-
-	if (options?.markdown) {
-		console.log();
-		exportToMarkdown(logs, options.output);
-	}
+	// Always export to markdown
+	exportToMarkdown(logs, options?.output);
 }
 
 program
@@ -50,7 +47,6 @@ program
 	.option("--range <range>", "Time range like 7d, 30d, 2w (ending today)")
 	.option("-i, --interactive", "Interactive mode")
 	.option("--slack", "Export in Slack format")
-	.option("--markdown", "Export to markdown file with clickable links")
 	.option("-o, --output <path>", "Output path for markdown file")
 	.action(async (options) => {
 		try {
@@ -58,7 +54,6 @@ program
 
 			if (dateRange) {
 				await fetchAndDisplayLogs(dateRange, {
-					markdown: options.markdown,
 					output: options.output,
 				});
 			} else {
