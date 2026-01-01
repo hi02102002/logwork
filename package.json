@@ -1,17 +1,17 @@
 {
-	"name": "logwork",
+	"name": "house-logwork",
 	"type": "module",
-	"version": "0.0.0",
+	"version": "0.1.0",
 	"description": "Công cụ CLI quản lý log công việc Linear",
-	"author": "Author Name <author.name@mail.com>",
+	"author": "hi02102002",
 	"license": "MIT",
-	"homepage": "https://github.com/author/library#readme",
+	"homepage": "https://github.com/hi02102002/logwork#readme",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/author/library.git"
+		"url": "git+https://github.com/hi02102002/logwork.git"
 	},
 	"bugs": {
-		"url": "https://github.com/author/library/issues"
+		"url": "https://github.com/hi02102002/logwork/issues"
 	},
 	"bin": {
 		"logwork": "./dist/index.mjs"
