@@ -121,9 +121,7 @@ export function displayTableFormat(
 
 		// Add separator between dates (except for last date)
 		if (date !== sortedDates[sortedDates.length - 1]) {
-			table.push([
-				{ colSpan: 3, content: "", hAlign: "center" as const },
-			]);
+			table.push([{ colSpan: 3, content: "", hAlign: "center" as const }]);
 		}
 	}
 
@@ -193,14 +191,19 @@ export function exportToMarkdown(
 		const [day, month, year] = date.split("/");
 		const fileName = outputPath
 			? outputPath
-			: path.join(reportsDir, `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}.md`);
+			: path.join(
+					reportsDir,
+					`${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}.md`,
+				);
 
 		fs.writeFileSync(fileName, markdown, "utf-8");
 		exportedFiles.push(fileName);
 	}
 
 	// Print exported files
-	console.log(chalk.green(`\n✓ ${exportedFiles.length} markdown file(s) exported:`));
+	console.log(
+		chalk.green(`\n✓ ${exportedFiles.length} markdown file(s) exported:`),
+	);
 	for (const file of exportedFiles) {
 		console.log(chalk.gray(`  ${file}`));
 	}

@@ -32,6 +32,8 @@ export function groupByDateThenUrl(
 }
 
 const mapCommentToWorkLog = (comment: Comment) => {
+	console.log(comment.id, comment.body);
+
 	return {
 		url: cleanIssueUrl(comment.url),
 		hours: extractHoursFromComment(comment.body, LOG_WORK_REGEX),
@@ -73,12 +75,14 @@ const getWorkLogs = async ({ from, to }: { from?: string; to?: string }) => {
 			: undefined;
 	} while (after);
 
-
 	return all
 		.filter((comment) => isMatchingRegex(comment.body, LOG_WORK_REGEX))
-		.map(mapCommentToWorkLog)
-		.filter((worklog) => {
-			const date = dayjs(worklog.date, "DD/MM/YYYY", true);
+		.filter((comment) => {
+			const date = dayjs(
+				getDateFromText(comment.body, comment.createdAt?.toISOString()),
+				"DD/MM/YYYY",
+				true,
+			);
 
 			if (!date.isValid()) return false;
 
@@ -86,7 +90,8 @@ const getWorkLogs = async ({ from, to }: { from?: string; to?: string }) => {
 			if (to && date.isAfter(dayjs(to), "day")) return false;
 
 			return true;
-		});
+		})
+		.map(mapCommentToWorkLog);
 };
 
 export const getGroupedWorkLogs = async (params: {
