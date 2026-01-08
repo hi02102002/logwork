@@ -135,6 +135,9 @@ export function displayTableFormat(
 	}
 
 	console.log(chalk.magenta.bold(`\nTotal hours: ${totalHours}h`));
+	if (totalHours < 8) {
+		console.log(chalk.red.bold(`⚠️  Warning: Total hours logged is less than 8 hours. ${8 - totalHours}h missing.`));
+	}
 	console.log(chalk.cyan.bold(`Total tasks: ${totalTasks}`));
 }
 

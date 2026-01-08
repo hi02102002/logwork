@@ -64,6 +64,5 @@ export async function getDateRangeFromOptions(
 		return dateRange;
 	}
 
-	// Default is interactive mode
 	return await getInteractiveDateRange();
 }

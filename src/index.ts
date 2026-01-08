@@ -4,9 +4,7 @@ import { getGroupedWorkLogs } from "./funcs/get-work-logs";
 import { getDateRangeFromOptions } from "./utils/cli-handler";
 import {
 	displayDateRangeMessage,
-	displayDetailedLogs,
 	displayNoLogsMessage,
-	displaySlackFormat,
 	displayTableFormat,
 	exportToMarkdown,
 } from "./utils/display";
